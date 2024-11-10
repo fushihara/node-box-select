@@ -1,7 +1,13 @@
+[![](https://img.shields.io/npm/last-update/%40fushihara%2Fbox-select-cui)](https://www.npmjs.com/package/@fushihara/box-select-cui) [![](https://img.shields.io/npm/types/%40fushihara%2Fbox-select-cui)](https://www.npmjs.com/package/@fushihara/box-select-cui) [![](https://img.shields.io/npm/unpacked-size/%40fushihara%2Fbox-select-cui)](https://www.npmjs.com/package/@fushihara/box-select-cui)
+
+https://www.npmjs.com/package/@fushihara/box-select-cui
+
 # windows＆mac＆日本語＆絵文字確認 console で上下を選択するライブラリ
 
 以下の nyagos を参考にした
 https://github.com/nyaosorg/go-box
+
+denoでも動作確認。
 
 # windows での使い方
 
