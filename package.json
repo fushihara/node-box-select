@@ -1,13 +1,13 @@
 {
   "name": "@fushihara/box-select-cui",
-  "version": "8.0.0",
+  "version": "9.0.0",
   "main": "src/box-select.mjs",
   "types": "src/box-select.d.ts",
   "type": "module",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git@github.com:fushihara/node-box-select.gitz"
+    "url": "git@github.com:fushihara/node-box-select.git"
   },
   "devDependencies": {
     "@types/node": "18.11.13"
