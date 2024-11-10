@@ -168,7 +168,7 @@ async function boxSelectLocal(choiseList) {
     isFirstDisplay = false;
   }
   p.rawMode = false;
-  p.showCursor = false;
+  p.showCursor = true;
   process.stdout.write("\n");
   return userSelectIndex;
 }
