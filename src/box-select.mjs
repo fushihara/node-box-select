@@ -1,14 +1,14 @@
 //@ts-check
-import {ChoiseBoxLayout} from "./choise-box-layout.mjs";
-import {Console} from "./module.mjs";
-import {StringWidth} from "./string-width.mjs";
+import { ChoiseBoxLayout } from "./choise-box-layout.mjs";
+import { Console } from "./module.mjs";
+import { StringWidth } from "./string-width.mjs";
 /**
  * 文字列の配列から選択肢を作成する。
  * 選択をキャンセルされた場合はnullを返す。
  * なにかの選択が行われた場合、コールバックの戻り値を返す
  * @param {{label:string,shortcutKey?:string|null,callback:()=>any}[]} choiseList
  */
-export async function boxSelectCb(choiseList) {
+export async function boxSelectCb (choiseList) {
   const selectIndex = await boxSelectLocal(
     choiseList.map((a) => {
       return {
@@ -25,10 +25,28 @@ export async function boxSelectCb(choiseList) {
 }
 /**
  * 文字列の配列から選択肢を作成する。
+ * 選択をキャンセルされた場合はnullを返す。
+ * なにかの選択が行われた場合、番号を返す。0始まり
+ * @param {{label:string,shortcutKey?:string|null}[]} choiseList
+ * @returns {Promise<number|null>}
+ */
+export async function boxSelectCb2 (choiseList) {
+  const selectIndex = await boxSelectLocal(
+    choiseList.map((a) => {
+      return {
+        label: a.label,
+        shortcutKey: a.shortcutKey ?? null,
+      };
+    })
+  );
+  return selectIndex;
+}
+/**
+ * 文字列の配列から選択肢を作成する。
  * ショートカットキーを自動的に付与する
  * @param {string[]} choiseList
  */
-export async function boxSelectPlaneStringList(choiseList) {
+export async function boxSelectPlaneStringList (choiseList) {
   const sk = [
     //"1", "2", "3", "4", "5", "6", "7", "8", "9", "0",
     "A",
@@ -71,7 +89,7 @@ export async function boxSelectPlaneStringList(choiseList) {
  * ショートカットキーはアルファベットの大文字or数字の1文字ornull
  * @param {{label:string,shortcutKey:string|null}[]} choiseList
  */
-async function boxSelectLocal(choiseList) {
+async function boxSelectLocal (choiseList) {
   if (process.stdout.isTTY == false) {
     throw new Error(`TTYでの動作を前提にしています`);
   }
@@ -170,6 +188,7 @@ async function boxSelectLocal(choiseList) {
   p.rawMode = false;
   p.showCursor = true;
   process.stdout.write("\n");
+  process.stdin.pause(); // ここでpauseをしないとstdinをハンドルが開きっぱなしになる
   return userSelectIndex;
 }
 
@@ -179,7 +198,7 @@ async function boxSelectLocal(choiseList) {
  * @param {string|null} shortcutKey
  * @returns {{allString:string,writeToConsole:(p:Console,choiseItemMaxWidth:number,isSelected:boolean)=>void}}
  */
-function shortcutKeyString(label, shortcutKey) {
+function shortcutKeyString (label, shortcutKey) {
   if (shortcutKey == null) {
     return {
       allString: `${label}`,

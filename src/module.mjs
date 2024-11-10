@@ -26,7 +26,6 @@ export class Console {
       process.stdin.once("data", (k) => {
         //console.log(`keyDown:${JSON.stringify(k)}`);
         //console.log(`keyDown:${JSON.stringify(k.toString("hex"))}`);
-        process.stdin.pause(); // ここでpauseをしないとstdinをハンドルが開きっぱなしになる
         resolve(new KeyDownBuffer(k));
       });
     });
