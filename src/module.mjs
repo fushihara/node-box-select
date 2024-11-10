@@ -1,31 +1,32 @@
 //@ts-check
 export class Console {
-  constructor() {}
+  constructor() { }
   /**
    * キーボードを入力してもエコーバックしないようにする
    * 作業後にfalseに戻すこと
    * @param {boolean} flag trueの場合はエコーバックしない
    */
-  set rawMode(flag) {
+  set rawMode (flag) {
     process.stdin.setRawMode(flag);
   }
   /**
    * カーソルの表示・非表示を切り替える
    * @param {boolean} flag trueの場合はカーソルを表示する。falseの場合は非表示にする
    */
-  set showCursor(flag) {
+  set showCursor (flag) {
     if (flag) {
       process.stdout.write("\x1B[?25h");
     } else {
       process.stdout.write("\x1B[?25l");
     }
   }
-  async waitKeyInput() {
+  async waitKeyInput () {
     /** @type {KeyDownBuffer} */
     const pressKey = await new Promise((resolve) => {
       process.stdin.once("data", (k) => {
         //console.log(`keyDown:${JSON.stringify(k)}`);
         //console.log(`keyDown:${JSON.stringify(k.toString("hex"))}`);
+        process.stdin.pause(); // ここでpauseをしないとstdinをハンドルが開きっぱなしになる
         resolve(new KeyDownBuffer(k));
       });
     });
@@ -36,7 +37,7 @@ export class Console {
    * @param {boolean} isFocus
    * @param {boolean} isUnderLine
    */
-  writeText(str, isFocus = false, isUnderLine = false) {
+  writeText (str, isFocus = false, isUnderLine = false) {
     if (isFocus) {
       process.stdout.write("\x1B[0;1;7m");
     }
@@ -53,14 +54,14 @@ export class Console {
    * カーソルを今の行から上y文字移動する
    * @param {number} y 0の場合は1と同じになる
    */
-  moveCursorUp(y) {
+  moveCursorUp (y) {
     process.stdout.write(`\x1B[${y}A`);
   }
   /**
    * カーソルを今の行の横x文字目に移動する
    * @param {number} x
    */
-  moveCursorX(x) {
+  moveCursorX (x) {
     process.stdout.write(`\x1B[${x}G`);
   }
 }
@@ -77,7 +78,7 @@ export class KeyDownBuffer {
   /**
    * Ctrl+X もしくはEscを押した時
    */
-  get isExit() {
+  get isExit () {
     if (this.buffer.compare(Buffer.from([0x1b])) == 0) {
       return true;
     }
@@ -86,27 +87,27 @@ export class KeyDownBuffer {
     }
     return false;
   }
-  get isArrowLeft() {
+  get isArrowLeft () {
     if (this.buffer.compare(Buffer.from([0x1b, 0x5b, 0x44])) == 0) {
       return true;
     }
   }
-  get isArrowRight() {
+  get isArrowRight () {
     if (this.buffer.compare(Buffer.from([0x1b, 0x5b, 0x43])) == 0) {
       return true;
     }
   }
-  get isArrowUp() {
+  get isArrowUp () {
     if (this.buffer.compare(Buffer.from([0x1b, 0x5b, 0x41])) == 0) {
       return true;
     }
   }
-  get isArrowDown() {
+  get isArrowDown () {
     if (this.buffer.compare(Buffer.from([0x1b, 0x5b, 0x42])) == 0) {
       return true;
     }
   }
-  get isEnter() {
+  get isEnter () {
     if (this.buffer.compare(Buffer.from([0x0d])) == 0) {
       return true;
     }
@@ -114,7 +115,7 @@ export class KeyDownBuffer {
   /**
    * アルファベットの場合は大文字にする
    */
-  get alphabetOrDigit() {
+  get alphabetOrDigit () {
     if (this.buffer.byteLength != 1) {
       return null;
     }
