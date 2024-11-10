@@ -1,5 +1,5 @@
 {
-  "name": "box-select-cui",
+  "name": "@fushihara/box-select-cui",
   "version": "1.0.0",
   "description": "",
   "main": "src/box-select.mjs",
