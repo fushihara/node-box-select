@@ -93,6 +93,7 @@ async function boxSelectLocal (choiseList) {
   if (process.stdout.isTTY == false) {
     throw new Error(`TTYでの動作を前提にしています`);
   }
+  process.stdin.resume();
   let selectIndex = 0;
   const p = new Console();
   p.rawMode = true;
