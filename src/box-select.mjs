@@ -10,7 +10,7 @@ import { StringWidth } from "./string-width.mjs";
 /**
  * @template {string} T
  * @param {Array<Prop<T>>} selection - Array of options for selection.
- * @returns {Promise<T|null>} - The selected value, or null if no selection is made.
+ * @returns {Promise<string|null>} - The selected value, or null if no selection is made.
  */
 export async function boxSelect (selection) {
   const selectId = await boxSelectLocal(selection.map((i) => {

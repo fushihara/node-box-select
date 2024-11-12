@@ -11,4 +11,5 @@ type Prop<T> = {
   value: T;
   shortcutKey?: string;
 };
-export declare function boxSelect<T extends string>(selection: Prop<T>[]): Promise<number | null>;
+export declare function boxSelect<T extends string>(selection: Prop<T>[]): Promise<string | null>;
+

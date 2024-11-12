@@ -1,6 +1,6 @@
 {
   "name": "@fushihara/box-select-cui",
-  "version": "11.0.0",
+  "version": "12.0.0",
   "main": "src/box-select.mjs",
   "types": "src/box-select.d.ts",
   "type": "module",
