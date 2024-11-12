@@ -3,43 +3,27 @@ import { ChoiseBoxLayout } from "./choise-box-layout.mjs";
 import { Console } from "./module.mjs";
 import { StringWidth } from "./string-width.mjs";
 /**
- * 文字列の配列から選択肢を作成する。
- * 選択をキャンセルされた場合はnullを返す。
- * なにかの選択が行われた場合、コールバックの戻り値を返す
- * @param {{label:string,shortcutKey?:string|null,callback:()=>any}[]} choiseList
+ *  @typedef { {  label: string;  value: T;  shortcutKey?: string;}} Prop<T>
+ *  @template {string} T
  */
-export async function boxSelectCb (choiseList) {
-  const selectIndex = await boxSelectLocal(
-    choiseList.map((a) => {
-      return {
-        label: a.label,
-        shortcutKey: a.shortcutKey ?? null,
-      };
-    })
-  );
-  if (selectIndex == null) {
-    return null;
-  } else {
-    return choiseList[selectIndex].callback();
-  }
-}
+
 /**
- * 文字列の配列から選択肢を作成する。
- * 選択をキャンセルされた場合はnullを返す。
- * なにかの選択が行われた場合、番号を返す。0始まり
- * @param {{label:string,shortcutKey?:string|null}[]} choiseList
- * @returns {Promise<number|null>}
+ * @template {string} T
+ * @param {Array<Prop<T>>} selection - Array of options for selection.
+ * @returns {Promise<T|null>} - The selected value, or null if no selection is made.
  */
-export async function boxSelectCb2 (choiseList) {
-  const selectIndex = await boxSelectLocal(
-    choiseList.map((a) => {
-      return {
-        label: a.label,
-        shortcutKey: a.shortcutKey ?? null,
-      };
-    })
-  );
-  return selectIndex;
+export async function boxSelect (selection) {
+  const selectId = await boxSelectLocal(selection.map((i) => {
+    return {
+      label: i.label,
+      shortcutKey: i.shortcutKey ?? null,
+    };
+  }));
+  if (selectId == null) {
+    return null;
+  }
+  const result = selection[selectId].value;
+  return result;
 }
 /**
  * 文字列の配列から選択肢を作成する。
